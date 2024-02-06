@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import LangIcon from '../icons/Lang';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStoreLanguage } from '../../redux/selectors';
 import { setLanguage } from '../../redux/languageSlice';
+
+import LangIcon from '../icons/Lang';
+import { StyledLangWrapper } from './StyledChangeLang';
 
 const ChangeLang = () => {
   const currentLanguage = useSelector(getStoreLanguage);
@@ -24,30 +26,39 @@ const ChangeLang = () => {
     },
   ];
   const dispatch = useDispatch();
-    
-     useEffect(() => {
-      
-          dispatch(setLanguage(selectedOption));
-        
-     }, [selectedOption, dispatch]);
+
+  useEffect(() => {
+    dispatch(setLanguage(selectedOption));
+  }, [selectedOption, dispatch]);
   return (
-    <div>
+    <StyledLangWrapper>
       <LangIcon />
       <Select
         defaultValue={selectedOption}
         onChange={setSelectedOption}
         options={options}
-        // theme={theme => ({
-        //   ...theme,
-        //   borderRadius: 0,
-        //   colors: {
-        //     ...theme.colors,
-        //     primary25: 'pink',
-        //     primary: '#78788c',
-        //   },
-        // })}
+        theme={theme => ({
+          ...theme,
+          borderRadius: 0,
+          border: 'none',
+          color: '#000000',
+          colors: {
+            ...theme.colors,
+            primary25: '#FFF',
+            primary: '#F2F2F2',
+          },
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            border: 'none',
+            height: '20px',
+          }),
+          menu: (baseStyles, state) => ({
+            ...baseStyles,
+            border: 'none',
+          }),
+        })}
       />
-    </div>
+    </StyledLangWrapper>
   );
 };
 

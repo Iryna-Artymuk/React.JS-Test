@@ -11,9 +11,14 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { languageReducer } from './languageSlice';
+import { citiesReducer } from './citiesSlice';
 
 const languagePersistConfig = {
   key: 'language',
+  storage,
+};
+const citiesPersistConfig = {
+  key: 'cities',
   storage,
 };
 
@@ -21,6 +26,7 @@ export const store = configureStore({
   reducer: {
     // contacts: contactsReducer,
     language: persistReducer(languagePersistConfig, languageReducer),
+    cities: persistReducer(citiesPersistConfig, citiesReducer),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
