@@ -1,13 +1,27 @@
 import { styled } from 'styled-components';
 
-export const StyledCard = styled.div`
+export const StyledCard = styled.li`
   position: relative;
+`;
+export const StyledCardWrapper = styled.div`
   width: 350px;
   height: 257px;
-  background-color: ${({ theme }) => theme.colors.card_BG_hot};
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  background-color: ${prop => {
+    if (prop.temp < 0) {
+      return prop.theme.colors.card_BG_cold;
+    } else {
+      return prop.theme.colors.card_BG_hot;
+    }
+  }};
   color: ${({ theme }) => theme.colors.card_text};
   box-shadow: ${({ theme }) => theme.colors.card_shadow};
   border-radius: 5px;
+  padding: 15px;
 `;
 
 export const StyledCloseButton = styled.button`
@@ -45,3 +59,97 @@ export const StyledCloseButton = styled.button`
     }
   }
 `;
+export const StyledNameWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const StyledName = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0px;
+  color: ${({ theme }) => theme.colors.card_text};
+`;
+export const StyledCondition = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const StyledIcon = styled.img`
+  width: 50px;
+  height: 50px;
+`;
+export const StyledText = styled.span`
+  font-size: 13px;
+  color: ${({ theme }) => theme.colors.card_text_light};
+`;
+export const StyledDate = styled.div`
+  font-size: 18px;
+  line-height: 1.44;
+  font-weight: 300;
+  color: ${({ theme }) => theme.colors.card_text};
+`;
+
+export const StyledWeatherWrapper = styled.div`
+  width: 100%;
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+export const StyledTempWrapper = styled.div`
+  display: flex;
+`;
+export const StyledTemp = styled.div`
+  height: 64px;
+  font-size: 44px;
+  line-height: 1.45;
+`;
+export const StyledIconWrapper = styled.div`
+  display: flex;
+`;
+export const StyledTempIcon = styled.div`
+  width: 21px;
+  height: 32px;
+  font-size: 22px;
+
+  &:first-child {
+    position: relative;
+    padding-right: 10px;
+    color: ${props => {
+      if (props.selectedTemp === 'C') {
+        return props.theme.colors.card_temp_icon_dark;
+      } else {
+        return props.theme.colors.card_temp_icon_light;
+      }
+    }};
+  }
+  &:nth-child(2) {
+    color: ${props => {
+      if (props.selectedTemp === 'F') {
+        return props.theme.colors.card_temp_icon_dark;
+      } else {
+        return props.theme.colors.card_temp_icon_light;
+      }
+    }};
+  }
+  padding-left: 10px;
+
+  &:first-child::after {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    content: '';
+    width: 1px;
+    height: 23px;
+    background: ${({ theme }) => theme.colors.card_temp_icon_light};
+  }
+`;
+export const StyledWind = styled.div``;

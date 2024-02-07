@@ -6,6 +6,7 @@ body{
   font-size: 16px;
   font-weight:500;
   background-color: ${({ theme }) => theme.colors.body_background};
+  box-sizing:border-box;
 }
 main {
 

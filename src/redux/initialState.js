@@ -1,8 +1,5 @@
 export const languagelState = {
-  language: {
-    value: 'EN',
-    label: 'EN',
-  },
+  language: 'EN',
 };
 export const cityState = {
   cities: [],

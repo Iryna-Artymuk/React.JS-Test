@@ -56,7 +56,6 @@ const Search = ({ onSearchChange }) => {
                 {loading ? <div>...loading</div> : null}
 
                 {suggestions.map(suggestion => {
-                  console.log('suggestion: ', suggestion);
                   const style = {
                     backgroundColor: suggestion.active ? '#F2F2F2' : '#fff',
                   };
