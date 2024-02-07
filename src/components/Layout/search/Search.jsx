@@ -4,9 +4,15 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
-import Button from '../button/Button';
+import Button from '../../button/Button';
 import { useDispatch } from 'react-redux';
-import { addCity } from '../../redux/citiesSlice';
+import { addCity } from '../../../redux/citiesSlice';
+import {
+  StyledSuggestionsList,
+  StylesContentWrapper,
+  StylesSearchWrapper,
+  StylesWrapper,
+} from './StyledSearch';
 
 // import { useSelector } from 'react-redux';
 // import { getStoreLanguage } from '../../redux/selectors';
@@ -30,43 +36,49 @@ const Search = ({ onSearchChange }) => {
       coordinates: coordinates,
     };
     dispatch(addCity(selectedCityData));
+    setAddress('');
   };
   return (
-    <div>
+    <StylesWrapper>
       <PlacesAutocomplete
         value={address}
         onChange={setAddress}
         onSelect={handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            {/* <p>Latitude: {coordinates.lat}</p>
-            <p>Longitude: {coordinates.lng}</p> */}
+          <StylesContentWrapper>
+            <StylesSearchWrapper>
+              <input {...getInputProps({ placeholder: 'Type address' })} />
+            </StylesSearchWrapper>
 
-            <input {...getInputProps({ placeholder: 'Type address' })} />
+            {suggestions && (
+              <StyledSuggestionsList>
+                {loading ? <div>...loading</div> : null}
 
-            <div>
-              {loading ? <div>...loading</div> : null}
+                {suggestions.map(suggestion => {
+                  console.log('suggestion: ', suggestion);
+                  const style = {
+                    backgroundColor: suggestion.active ? '#F2F2F2' : '#fff',
+                  };
 
-              {suggestions.map(suggestion => {
-                const style = {
-                  backgroundColor: suggestion.active ? '#F2F2F2' : '#fff',
-                };
-
-                return (
-                  <div {...getSuggestionItemProps(suggestion, { style })}>
-                    {suggestion.description}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                  return (
+                    <li
+                      key={suggestion.index}
+                      {...getSuggestionItemProps(suggestion, { style })}
+                    >
+                      <p>{suggestion.description}</p>
+                    </li>
+                  );
+                })}
+              </StyledSuggestionsList>
+            )}
+          </StylesContentWrapper>
         )}
       </PlacesAutocomplete>
       <Button type="button" onClick={handelClick}>
         Add
       </Button>
-    </div>
+    </StylesWrapper>
   );
 };
 

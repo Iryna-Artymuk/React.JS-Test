@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 import { cityState } from './initialState';
 
 const citySlice = createSlice({
@@ -11,15 +11,14 @@ const citySlice = createSlice({
     // очікується що в action.payload при відправці action  в фільтрі події onchange відправиться актуальне значення
     // фільтру яке reducer запише в store
     addCity(state, action) {
-    
       state.cities.push(action.payload);
     },
     deleteCity(state, action) {
-      console.log('action: ', action);
-      const index = state.cities.findIndex(contact => {
-        return contact.id === action.payload.id;
+      const index = state.cities.findIndex(city => {
+        return city.id === action.payload;
       });
-      state.favouriteContacts.splice(index, 1);
+      console.log(index);
+      state.cities.splice(index, 1);
     },
   },
 });

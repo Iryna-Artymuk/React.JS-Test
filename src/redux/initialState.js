@@ -5,13 +5,7 @@ export const languagelState = {
   },
 };
 export const cityState = {
-  cities: [
-    {
-      id: '',
-      name: '',
-      coordinates: { lat: null, lng: null },
-    },
-  ],
+  cities: [],
   isLoading: false,
   error: null,
 };

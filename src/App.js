@@ -5,12 +5,12 @@ import Layout from './components/Layout/Layout';
 import { useSelector } from 'react-redux';
 import { getCities, getStoreLanguage } from './redux/selectors';
 import ChangeLang from './components/changeLang/ChangeLang';
-import Search from './components/search/Search';
+import Search from './components/Layout/search/Search';
 import { StyledContentWrapper } from './components/Layout/StyledLayout';
+import CurrentWeather from './components/currentWeather/CurrentWeather';
 
 function App() {
   const currentLanguage = useSelector(getStoreLanguage);
-  const cities = useSelector(getCities);
 
   return (
     <Layout>
@@ -22,15 +22,7 @@ function App() {
         <main>
           <StyledContentWrapper>
             <Search />
-            <div>
-              {cities?.map(item => (
-                <div>
-                  <p>{item.name}</p>
-                  <p>{item.coordinates.lat}</p>
-                  <p>{item.coordinates.lng}</p>
-                </div>
-              ))}
-            </div>
+            <CurrentWeather />
           </StyledContentWrapper>
         </main>
       </ThemeProvider>

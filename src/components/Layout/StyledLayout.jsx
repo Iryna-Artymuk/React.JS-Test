@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const StyledContainer = styled.div`
-  max-width: 1220px;
+  max-width: 1920px;
   margin: 0 auto 0;
   padding: 15px;
   outline: 1px solid red;
@@ -11,6 +11,6 @@ export const StyledContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 39px;
-  padding-top: 120px;
+  padding: 120px 0 15px;
   outline: 1px solid blue;
 `;

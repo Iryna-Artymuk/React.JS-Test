@@ -2,14 +2,10 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
 body{
- 
+  font-family: 'Jost', sans-serif;
   font-size: 16px;
   font-weight:500;
-  background-color: ${({ theme }) => {
-    // console.log(' theme: ',  theme);
-
-    return theme.colors.body_background;
-  }};
+  background-color: ${({ theme }) => theme.colors.body_background};
 }
 main {
 
@@ -69,16 +65,8 @@ img {
   max-width: 100%;
   height: auto;
 }
-
-.light {
-  background-color: hsl(0, 0%, 93%);
-}
-.dark {
-  background-color: hsl(0, 0%, 20%);
+*:focus {
+    outline: none;
 }
 
-.error{
- 
-color: ${({ theme }) => theme.colors.errorTextColor}
-}
 `;

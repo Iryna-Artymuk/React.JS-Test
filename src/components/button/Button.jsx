@@ -1,10 +1,11 @@
 import React from 'react';
+import { StyledButton } from './StyledButton';
 
 const Button = ({ children, type, onClick }) => {
   return (
-    <button type={type} onClick={onClick}>
+    <StyledButton type={type} onClick={onClick}>
       {children}
-    </button>
+    </StyledButton>
   );
 };
 
