@@ -11,7 +11,7 @@ const citySlice = createSlice({
     // очікується що в action.payload при відправці action  в фільтрі події onchange відправиться актуальне значення
     // фільтру яке reducer запише в store
     addCity(state, action) {
-      state.cities.push(action.payload);
+      state.cities.unshift(action.payload);
     },
     deleteCity(state, action) {
       const index = state.cities.findIndex(city => {

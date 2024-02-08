@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyledForecastWrapper } from './StyledForecast';
 import 'chart.js/auto';
 import { Chart as ChartJS, Filler } from 'chart.js';
@@ -18,7 +18,7 @@ export const options = {
       fontSize: 6,
       formatter: Math.round,
       anchor: 'end',
-      offset: -15,
+      offset: 0,
       align: 'start',
     },
     legend: {
@@ -56,10 +56,8 @@ export const options = {
 const Forecast = ({ temp, forecast, name }) => {
   const [chartData, setChartData] = useState({ datasets: [] });
   const [date, setDate] = useState([]);
-
-  const [forecastTemt, setForecastTemt] = useState([]);
+  const [forecastTemp, setForecastTemp] = useState([]);
   const [daysForecast, setDaysForecast] = useState([]);
-  console.log('daysForecast: ', daysForecast);
 
   const getColor = temp => {
     console.log('temp : ', temp);
@@ -89,7 +87,7 @@ const Forecast = ({ temp, forecast, name }) => {
   useEffect(() => {
     daysForecast.forEach(day => {
       setDate(prev => [...prev, convertUnixToDate(day.dt)]);
-      setForecastTemt(prev => [...prev, Math.floor(day.main.temp)]);
+      setForecastTemp(prev => [...prev, Math.floor(day.main.temp)]);
     });
   }, [daysForecast]);
   useEffect(() => {
@@ -98,19 +96,18 @@ const Forecast = ({ temp, forecast, name }) => {
         labels: date,
         datasets: [
           {
-            data: forecastTemt,
-            // fill: true,
+            data: forecastTemp,
+            //fill: true,
             borderWidth: 1,
-            pointRadius: 0,
+            pointRadius: 1,
             borderColor: getColor(temp),
             backgroundColor: getColor(temp),
-            //backgroundColor: getGradient, // Apply the gradient
           },
         ],
       });
     };
     cahrt();
-  }, [temp, date]);
+  }, [temp, date, forecastTemp]);
   return (
     <StyledForecastWrapper temp={temp}>
       <Line options={options} data={chartData} />

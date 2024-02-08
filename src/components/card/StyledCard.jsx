@@ -5,7 +5,7 @@ export const StyledCard = styled.li`
 `;
 export const StyledCardWrapper = styled.div`
   width: 350px;
-  /* height: 257px; */
+  min-height: 257px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33,6 +33,7 @@ export const StyledCloseButton = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
   width: 1rem;
   height: 1rem;
   background: transparent;
@@ -48,10 +49,11 @@ export const StyledCloseButton = styled.button`
 
     transition: all 0.3s linear;
     position: relative;
-    transform-origin: 0px;
+    transform-origin: -0.9px;
 
     &:first-child {
       transform: rotate(45deg);
+      transform-origin: 0.1px;
     }
 
     &:nth-child(2) {
