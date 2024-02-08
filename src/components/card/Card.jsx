@@ -155,7 +155,7 @@ const Card = ({ data }) => {
                 </StyledFeelsTemp>
               </div>
 
-              <StyledAirMetrict>
+              <StyledAirMetrict temp={Math.floor(main?.temp)}>
                 <div>
                   <span>Wind: </span>
                   <span>{wind?.speed} m/s</span>

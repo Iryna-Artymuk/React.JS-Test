@@ -19,7 +19,7 @@ export const theme = {
     card_temp_icon_light: '#8D8D8D',
     card_temp_icon_dark: '#000000',
 
-    temp_air_cold: ' npm ',
+    temp_air_cold: '#459DE9 ',
     temp_air_hot: '#FFA25B',
 
     forecast_BG_cold:

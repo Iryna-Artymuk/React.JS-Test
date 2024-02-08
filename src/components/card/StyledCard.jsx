@@ -170,6 +170,7 @@ export const StyledAirMetrict = styled.div`
   color: ${({ theme }) => theme.colors.card_text};
   div span:nth-child(2) {
     color: ${prop => {
+      console.log('prop : ', prop );
       if (prop.temp < 0) {
         return prop.theme.colors.temp_air_cold;
       } else {
