@@ -13,9 +13,6 @@ import {
   StylesSearchWrapper,
   StylesWrapper,
 } from './StyledSearch';
-
-// import { useSelector } from 'react-redux';
-// import { getStoreLanguage } from '../../redux/selectors';
 const Search = ({ onSearchChange }) => {
   const [address, setAddress] = useState('');
   const [coordinates, setCoordinates] = useState({

@@ -17,6 +17,7 @@ export const StylesSearchWrapper = styled.div`
   input {
     width: 100%;
     height: 40px;
+    font-size: 14px;
     box-shadow: ${({ theme }) => theme.colors.input_shadow};
     border: none;
     border-radius: 5px;
@@ -29,6 +30,8 @@ export const StylesContentWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 14px;
+  box-shadow: ${({ theme }) => theme.colors.card_text};
 `;
 export const StyledSuggestionsList = styled.ul`
   width: 100%;

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {
+  StyledAirMetrict,
   StyledCard,
   StyledCardWrapper,
   StyledCloseButton,
   StyledCondition,
   StyledDate,
+  StyledFeelsTemp,
   StyledIcon,
   StyledIconWrapper,
   StyledName,
@@ -14,7 +16,6 @@ import {
   StyledTempWrapper,
   StyledText,
   StyledWeatherWrapper,
-  StyledWind,
 } from './StyledCard';
 import { deleteCity } from '../../redux/citiesSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,8 +29,10 @@ const Card = ({ data }) => {
   const currentLanguage = useSelector(getStoreLanguage);
   const [currentWeather, setCurrentWeather] = useState([]);
   const [loading, setloading] = useState(false);
+  const [error, setError] = useState(null);
   const [selectedTemp, setTelectedTemp] = useState('C');
   const [temp, setTemp] = useState();
+  const [feelsTemp, setFeelsTemp] = useState();
 
   const { main, name, weather, sys, wind, dt } = currentWeather;
   const [forecast, setForecast] = useState(null);
@@ -45,15 +48,22 @@ const Card = ({ data }) => {
   useEffect(() => {
     if (selectedTemp === 'F') {
       const convertTemp = convertTemperature(Math.floor(main?.temp));
+      const convertFeelsTemp = convertTemperature(Math.floor(main?.temp));
       setTemp(convertTemp);
+      setFeelsTemp(convertFeelsTemp);
     } else {
       if (Math.floor(main?.temp) > 0) {
         setTemp(`+${Math.floor(main?.temp)}`);
       } else {
         setTemp(Math.floor(main?.temp));
       }
+      if (Math.floor(main?.feels_like) > 0) {
+        setFeelsTemp(`+${Math.floor(main?.feels_like)}`);
+      } else {
+        setFeelsTemp(Math.floor(main?.feels_like));
+      }
     }
-  }, [selectedTemp, main?.temp]);
+  }, [selectedTemp, main?.temp, main?.feels_like]);
 
   useEffect(() => {
     try {
@@ -74,12 +84,15 @@ const Card = ({ data }) => {
           setForecast(forcastResponse);
           setloading(false);
         })
-        .catch(error => console.log(error));
+        .catch(error => setError(error));
     } catch (error) {
       setloading(false);
-      console.log(error);
+      setError(error);
     }
   }, [data.coordinates.lat, data.coordinates.lng]);
+  if (error) {
+    return <p>{error.message}</p>;
+  }
   return (
     <StyledCard>
       <StyledCardWrapper temp={Math.floor(main?.temp)}>
@@ -87,7 +100,7 @@ const Card = ({ data }) => {
           <div></div>
           <div></div>
         </StyledCloseButton>
-        {!loading ? (
+        {!loading && !error ? (
           <>
             <StyledNameWrapper>
               <StyledName>
@@ -112,7 +125,7 @@ const Card = ({ data }) => {
                 ))}
               </>
             </StyledNameWrapper>
-            <Forecast temp={Math.floor(main?.temp)} />
+            <Forecast temp={Math.floor(main?.temp)} forecast={forecast} />
             <StyledWeatherWrapper>
               <div>
                 <StyledTempWrapper>
@@ -134,13 +147,15 @@ const Card = ({ data }) => {
                     </StyledTempIcon>
                   </StyledIconWrapper>
                 </StyledTempWrapper>
-                <div>
+                <StyledFeelsTemp>
                   Feels like:
-                  <span>{main?.feels_like} °C</span>
-                </div>
+                  <span>
+                    {feelsTemp} °{selectedTemp}
+                  </span>
+                </StyledFeelsTemp>
               </div>
 
-              <StyledWind>
+              <StyledAirMetrict>
                 <div>
                   <span>Wind: </span>
                   <span>{wind?.speed} m/s</span>
@@ -153,7 +168,7 @@ const Card = ({ data }) => {
                   <span>Pressure: </span>
                   <span> {main?.pressure}Pa</span>
                 </div>
-              </StyledWind>
+              </StyledAirMetrict>
             </StyledWeatherWrapper>
           </>
         ) : (

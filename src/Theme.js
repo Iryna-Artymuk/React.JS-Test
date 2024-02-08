@@ -19,6 +19,9 @@ export const theme = {
     card_temp_icon_light: '#8D8D8D',
     card_temp_icon_dark: '#000000',
 
+    temp_air_cold: ' npm ',
+    temp_air_hot: '#FFA25B',
+
     forecast_BG_cold:
       'transparent linear-gradient(180deg, #5B8CFF 0%, #FFF4F4 100%) 0% 0% no-repeat padding-box;',
 

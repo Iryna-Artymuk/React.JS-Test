@@ -5,10 +5,10 @@ export const StyledCard = styled.li`
 `;
 export const StyledCardWrapper = styled.div`
   width: 350px;
-  height: 257px;
+  /* height: 257px; */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
   background-color: ${prop => {
@@ -21,7 +21,7 @@ export const StyledCardWrapper = styled.div`
   color: ${({ theme }) => theme.colors.card_text};
   box-shadow: ${({ theme }) => theme.colors.card_shadow};
   border-radius: 5px;
-  padding: 15px;
+  padding: 10px 15px;
 `;
 
 export const StyledCloseButton = styled.button`
@@ -102,7 +102,7 @@ export const StyledWeatherWrapper = styled.div`
   display: flex;
 
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 `;
 export const StyledTempWrapper = styled.div`
   display: flex;
@@ -152,4 +152,27 @@ export const StyledTempIcon = styled.div`
     background: ${({ theme }) => theme.colors.card_temp_icon_light};
   }
 `;
-export const StyledWind = styled.div``;
+export const StyledFeelsTemp = styled.div`
+  color: ${({ theme }) => theme.colors.card_text_light};
+  font-size: 13px;
+  line-height: 1.46;
+`;
+export const StyledAirMetrict = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.card_text};
+  div span:nth-child(2) {
+    color: ${prop => {
+      if (prop.temp < 0) {
+        return prop.theme.colors.temp_air_cold;
+      } else {
+        return prop.theme.colors.temp_air_hot;
+      }
+    }};
+  }
+`;
