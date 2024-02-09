@@ -8,7 +8,6 @@ import { formatDate } from '../../helpers/formatDate';
 import { getStoreLanguage } from '../../redux/selectors';
 import { convertTemperature } from '../../helpers/convertTemperature';
 
-
 import {
   StyledAirMetrict,
   StyledCard,
@@ -77,7 +76,7 @@ const Card = ({ data }) => {
         const responce = await getCurrentWeather(
           data.coordinates.lat,
           data.coordinates.lng,
-          currentLanguage.value
+          currentLanguage?.value
         );
 
         setCurrentWeather(responce);
