@@ -4,9 +4,9 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
-import Button from '../../button/Button';
+import Button from '../button/Button';
 import { useDispatch } from 'react-redux';
-import { addCity } from '../../../redux/citiesSlice';
+import { addCity } from '../../redux/citiesSlice';
 import {
   StyledSuggestionsList,
   StylesContentWrapper,

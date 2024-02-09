@@ -2,10 +2,13 @@ import { styled } from 'styled-components';
 
 export const StyledCard = styled.li`
   position: relative;
+  width: 100%;
+  max-width: 350px;
+  min-height: 257px;
 `;
 export const StyledCardWrapper = styled.div`
-  width: 350px;
-  min-height: 257px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -124,7 +127,7 @@ export const StyledTempIcon = styled.div`
 
   &:first-child {
     position: relative;
-    padding-right: 10px;
+
     color: ${props => {
       if (props.selectedTemp === 'C') {
         return props.theme.colors.card_temp_icon_dark;
@@ -141,16 +144,17 @@ export const StyledTempIcon = styled.div`
         return props.theme.colors.card_temp_icon_light;
       }
     }};
+    margin-left: 20px;
   }
-  padding-left: 10px;
 
   &:first-child::after {
     position: absolute;
     top: 2px;
-    right: 0;
+    right: -10px;
     content: '';
     width: 1px;
     height: 23px;
+
     background: ${({ theme }) => theme.colors.card_temp_icon_light};
   }
 `;
@@ -170,7 +174,7 @@ export const StyledAirMetrict = styled.div`
   color: ${({ theme }) => theme.colors.card_text};
   div span:nth-child(2) {
     color: ${prop => {
-      console.log('prop : ', prop );
+      console.log('prop : ', prop);
       if (prop.temp < 0) {
         return prop.theme.colors.temp_air_cold;
       } else {

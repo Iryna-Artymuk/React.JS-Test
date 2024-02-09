@@ -5,7 +5,7 @@ import Layout from './components/Layout/Layout';
 import { useSelector } from 'react-redux';
 import { getCities, getStoreLanguage } from './redux/selectors';
 import ChangeLang from './components/changeLang/ChangeLang';
-import Search from './components/Layout/search/Search';
+import Search from './components/search/Search';
 import { StyledContentWrapper } from './components/Layout/StyledLayout';
 import CurrentWeather from './components/currentWeather/CurrentWeather';
 

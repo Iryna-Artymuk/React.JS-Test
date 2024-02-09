@@ -1,12 +1,18 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 body{
   font-family: 'Jost', sans-serif;
   font-size: 16px;
   font-weight:500;
   background-color: ${({ theme }) => theme.colors.body_background};
-  box-sizing:border-box;
+
 }
 main {
 

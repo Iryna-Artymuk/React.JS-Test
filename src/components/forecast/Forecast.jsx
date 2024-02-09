@@ -64,7 +64,7 @@ const Forecast = ({ temp, forecast, name }) => {
     if (temp < 0) {
       return '#5b8cff74 ';
     }
-    if (temp > 0) {
+    if (temp >= 0) {
       return '#ffa25ba6';
     }
   };
