@@ -1,5 +1,5 @@
 import { createSlice, current } from '@reduxjs/toolkit';
-import { cityState } from './initialState';
+import { cityState } from '../initialState';
 
 const citySlice = createSlice({
   // Ім'я слайсу

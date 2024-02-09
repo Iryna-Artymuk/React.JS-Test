@@ -69,7 +69,7 @@ const Card = ({ data }) => {
     try {
       setloading(true);
       const currentWeatherFetch = fetch(
-        `${WEATHER_API_URL}/weather?lat=${data.coordinates.lat}&lon=${data.coordinates.lng}&appid=${WEATHER_API_KEY}&units=metric`
+        `${WEATHER_API_URL}/weather?lat=${data.coordinates.lat}&lon=${data.coordinates.lng}&appid=${WEATHER_API_KEY}&lang=${currentLanguage}&units=metric`
       );
       const forecastFetch = fetch(
         `${WEATHER_API_URL}/forecast?lat=${data.coordinates.lat}&lon=${data.coordinates.lng}&appid=${WEATHER_API_KEY}&units=metric`
@@ -89,7 +89,7 @@ const Card = ({ data }) => {
       setloading(false);
       setError(error);
     }
-  }, [data.coordinates.lat, data.coordinates.lng]);
+  }, [data.coordinates.lat, data.coordinates.lng, currentLanguage]);
   if (error) {
     return <p>{error.message}</p>;
   }

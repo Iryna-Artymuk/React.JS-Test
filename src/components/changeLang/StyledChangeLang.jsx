@@ -4,8 +4,9 @@ export const StyledLangWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 5px;
   svg {
-    width: 20px;
-    height: 20px;
+    width: 12px;
+    height: 12px;
   }
 `;

@@ -75,5 +75,15 @@ img {
 *:focus {
     outline: none;
 }
-
+.css-1xc3v61-indicatorContainer{
+  padding:5px !important;
+}
+.select .css-1nlg94l-singleValue {
+  font-size: 14px !important;
+  color: #AFAFAF !important;
+}
+.select .react-select__menu {
+border:0 !important;
+ 
+}
 `;

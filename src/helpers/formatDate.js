@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 export const formatDate = (unixTime, currentLanguage) => {
-  // console.log('currentLanguage: ', currentLanguage);
+  console.log('currentLanguage: ', currentLanguage);
   let date = new Date(unixTime * 1000);
 
   // const locale = 'en-US';

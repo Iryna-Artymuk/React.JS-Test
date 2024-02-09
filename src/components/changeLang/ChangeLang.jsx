@@ -25,6 +25,70 @@ const ChangeLang = () => {
       label: 'HE',
     },
   ];
+  const colourStyles = {
+    control: styles => ({
+      ...styles,
+      backgroundColor: '#fff',
+      border: 0,
+      boxShadow: 'none',
+      minHeight: 23,
+      '&:focus': {
+        color: 'pink',
+      },
+    }),
+    container: styles => ({ ...styles, color: 'red' }),
+    indicatorSeparator: styles => ({
+      ...styles,
+      display: 'none',
+    }),
+    indicatorContainer: styles => ({
+      ...styles,
+      height: 23,
+    }),
+    input: styles => ({
+      ...styles,
+      paddingTop: 0,
+      paddingBottom: 0,
+      margin: 0,
+    }),
+    singleValue: styles => ({
+      ...styles,
+      fontSize: 16,
+    }),
+    valueContainer: styles => ({
+      ...styles,
+      padding: 0,
+      fontSize: 16,
+      color: '#AFAFAF',
+      border: 0,
+      height: 23,
+    }),
+    placeholder: styles => ({
+      ...styles,
+      color: 'red',
+    }),
+    menu: styles => ({
+      ...styles,
+      border: 0,
+      boxShadow: 0,
+      backgroundColor: '#fff',
+    }),
+
+    menuList: styles => ({
+      ...styles,
+      boxShadow: '0px 3px 6px #00000029',
+      border: 0,
+    }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      return {
+        ...styles,
+        backgroundColor: isSelected ? '#F2F2F2' : '#fff',
+        color: '#000000',
+        cursor: isDisabled ? 'not-allowed' : 'default',
+        fontSize: 14,
+      };
+    },
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,26 +101,8 @@ const ChangeLang = () => {
         defaultValue={selectedOption}
         onChange={setSelectedOption}
         options={options}
-        theme={theme => ({
-          ...theme,
-          borderRadius: 0,
-          border: 'none',
-          color: '#000000',
-          colors: {
-            ...theme.colors,
-            primary25: '#FFF',
-            primary: '#F2F2F2',
-          },
-          control: (baseStyles, state) => ({
-            ...baseStyles,
-            border: 'none',
-            height: '20px',
-          }),
-          menu: (baseStyles, state) => ({
-            ...baseStyles,
-            border: 'none',
-          }),
-        })}
+        className="select"
+        styles={colourStyles}
       />
     </StyledLangWrapper>
   );
