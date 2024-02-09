@@ -1,9 +1,6 @@
-import { useSelector } from 'react-redux';
-
 export const formatDate = (unixTime, currentLanguage) => {
   let date = new Date(unixTime * 1000);
-  console.log(currentLanguage.value);
-  // const locale = 'en-US';
+ 
   const locale = () => {
     if (currentLanguage.value === 'en') {
       return 'en-US';
@@ -17,10 +14,6 @@ export const formatDate = (unixTime, currentLanguage) => {
       return 'en-US';
     }
   };
-
-  // const locale = 'en-US';
-
-  // return formattedDate;
   let dateString = date.toLocaleString(locale(), {
     weekday: 'short',
     month: 'long',

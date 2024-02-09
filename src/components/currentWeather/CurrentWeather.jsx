@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyledWeatherList } from './StyledCurrentWeather';
-import Card from '../card/Card';
+
 import { useSelector } from 'react-redux';
 import { getCities } from '../../redux/selectors';
 
+import Card from '../card/Card';
+import { StyledWeatherList } from './StyledCurrentWeather';
 
 const CurrentWeather = () => {
   const cities = useSelector(getCities);

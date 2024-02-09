@@ -1,32 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStoreLanguage } from '../../redux/selectors';
-import { setLanguage } from '../../redux/languageSlice';
 
+import { getStoreLanguage } from '../../redux/selectors';
+import { setLanguage } from '../../redux/languageSlice'
+import { options } from '../../constant/langOption';
 import LangIcon from '../icons/Lang';
 import { StyledLangWrapper } from './StyledChangeLang';
-import { useTranslation } from 'react-i18next';
 
 const ChangeLang = () => {
   const currentLanguage = useSelector(getStoreLanguage);
   const [selectedOption, setSelectedOption] = useState(currentLanguage);
-  console.log('selectedOption: ', selectedOption);
+  
 
-  const options = [
-    {
-      value: 'en',
-      label: 'EN',
-    },
-    {
-      value: 'uk',
-      label: 'UK',
-    },
-    {
-      value: 'he',
-      label: 'HE',
-    },
-  ];
+
   const colourStyles = {
     control: styles => ({
       ...styles,

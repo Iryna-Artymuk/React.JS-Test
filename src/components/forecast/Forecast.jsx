@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { StyledForecastWrapper } from './StyledForecast';
 import 'chart.js/auto';
 import { Chart as ChartJS, Filler } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Line } from 'react-chartjs-2';
+
 import { convertUnixToDate } from '../../helpers/convertUnixToDate';
+import { getGraphColor } from '../../helpers/getGraphColor';
+import { getForecastWeather } from '../../api';
+
+import { StyledForecastWrapper } from './StyledForecast';
 
 ChartJS.register(Filler, ChartDataLabels);
 
@@ -53,25 +57,34 @@ export const options = {
   },
 };
 
-const Forecast = ({ temp, forecast, name }) => {
+const Forecast = ({ temp, data }) => {
   const [chartData, setChartData] = useState({ datasets: [] });
   const [date, setDate] = useState([]);
+  const [forecast, setForecast] = useState([]);
   const [forecastTemp, setForecastTemp] = useState([]);
   const [daysForecast, setDaysForecast] = useState([]);
 
-  const getColor = temp => {
-    if (temp < 0) {
-      return '#5b8cff74 ';
-    }
-    if (temp >= 0) {
-      return '#ffa25ba6';
-    }
-  };
+  useEffect(() => {
+    const getWeather = async () => {
+      try {
+        const responce = await getForecastWeather(
+          data.coordinates.lat,
+          data.coordinates.lng
+        );
 
+        setForecast(responce);
+      } catch (Error) {
+        // setError(Error);
+        console.log(Error.message);
+      } finally {
+      }
+    };
+    getWeather();
+  }, [data.coordinates.lat, data.coordinates.lng]);
   useEffect(() => {
     const groupByDay = data => {
       const groupData = {};
-      forecast?.list.forEach(item => {
+      forecast?.list?.forEach(item => {
         const date = item.dt_txt.split(' ')[0];
         if (!groupData[date]) {
           groupData[date] = item;
@@ -79,11 +92,14 @@ const Forecast = ({ temp, forecast, name }) => {
       });
       return Object.values(groupData);
     };
-    setDaysForecast(groupByDay());
+    const group = groupByDay();
+
+    setDaysForecast(group);
   }, [forecast?.list]);
 
   //get chart date
   useEffect(() => {
+    'hello';
     daysForecast.forEach(day => {
       setDate(prev => [...prev, convertUnixToDate(day.dt)]);
       setForecastTemp(prev => [...prev, Math.floor(day.main.temp)]);
@@ -99,8 +115,8 @@ const Forecast = ({ temp, forecast, name }) => {
             //fill: true,
             borderWidth: 1,
             pointRadius: 1,
-            borderColor: getColor(temp),
-            backgroundColor: getColor(temp),
+            borderColor: getGraphColor(temp),
+            backgroundColor: getGraphColor(temp),
           },
         ],
       });

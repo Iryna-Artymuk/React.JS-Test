@@ -1,16 +1,16 @@
 import { GlobalStyles } from './GlobalStyles';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './Theme';
-import Layout from './components/Layout/Layout';
-import { useSelector } from 'react-redux';
-import { getCities, getStoreLanguage } from './redux/selectors';
-import ChangeLang from './components/changeLang/ChangeLang';
-import Search from './components/search/Search';
-import { StyledContentWrapper } from './components/Layout/StyledLayout';
-import CurrentWeather from './components/currentWeather/CurrentWeather';
 
+
+import ChangeLang from './components/changeLang/ChangeLang';
+import CurrentWeather from './components/currentWeather/CurrentWeather';
+import Layout from './components/Layout/Layout';
+import Search from './components/search/Search';
+
+import { StyledContentWrapper } from './components/Layout/StyledLayout';
 function App() {
-  const currentLanguage = useSelector(getStoreLanguage);
+
 
   return (
     <Layout>

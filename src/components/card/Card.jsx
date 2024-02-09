@@ -1,4 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { deleteCity } from '../../redux/citiesSlice';
+import { getCurrentWeather } from '../../api';
+import { formatDate } from '../../helpers/formatDate';
+import { getStoreLanguage } from '../../redux/selectors';
+import { convertTemperature } from '../../helpers/convertTemperature';
+
+
 import {
   StyledAirMetrict,
   StyledCard,
@@ -17,37 +27,30 @@ import {
   StyledText,
   StyledWeatherWrapper,
 } from './StyledCard';
-import { deleteCity } from '../../redux/citiesSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { WEATHER_API_KEY, WEATHER_API_URL } from '../../api';
-import { formatDate } from '../../helpers/formatDate';
-import { getStoreLanguage } from '../../redux/selectors';
 import Forecast from '../forecast/Forecast';
-import { convertTemperature } from '../../helpers/convertTemperature';
-import { useTranslation } from 'react-i18next';
-
 const Card = ({ data }) => {
   const currentLanguage = useSelector(getStoreLanguage);
-  const [currentWeather, setCurrentWeather] = useState([]);
-  const [loading, setloading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedTemp, setTelectedTemp] = useState('C');
   const [temp, setTemp] = useState();
   const [feelsTemp, setFeelsTemp] = useState();
-
+  const [currentWeather, setCurrentWeather] = useState([]);
   const { main, name, weather, sys, wind, dt } = currentWeather;
 
-  const [forecast, setForecast] = useState(null);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  // add city
   const handelClick = id => {
-    console.log('id : ', id);
     dispatch(deleteCity(id));
   };
+
+  // convert temp
   const handelTempChange = e => {
-    let val = e.target.getAttribute('data-dataTemp');
+    let val = e.target.getAttribute('data-datatemp');
     setTelectedTemp(val);
   };
+
   useEffect(() => {
     if (selectedTemp === 'F') {
       const convertTemp = convertTemperature(Math.floor(main?.temp));
@@ -69,30 +72,24 @@ const Card = ({ data }) => {
   }, [selectedTemp, main?.temp, main?.feels_like]);
 
   useEffect(() => {
-    try {
-      setloading(true);
-      const currentWeatherFetch = fetch(
-        `${WEATHER_API_URL}/weather?lat=${data.coordinates.lat}&lon=${data.coordinates.lng}&appid=${WEATHER_API_KEY}&lang=${currentLanguage.value}&units=metric`
-      );
-      const forecastFetch = fetch(
-        `${WEATHER_API_URL}/forecast?lat=${data.coordinates.lat}&lon=${data.coordinates.lng}&appid=${WEATHER_API_KEY}&units=metric`
-      );
-      Promise.all([currentWeatherFetch, forecastFetch])
-        .then(async response => {
-          const weatherResponse = await response[0].json();
+    const getWeather = async () => {
+      try {
+        const responce = await getCurrentWeather(
+          data.coordinates.lat,
+          data.coordinates.lng,
+          currentLanguage.value
+        );
 
-          const forcastResponse = await response[1].json();
-
-          setCurrentWeather(weatherResponse);
-          setForecast(forcastResponse);
-          setloading(false);
-        })
-        .catch(error => setError(error));
-    } catch (error) {
-      setloading(false);
-      setError(error);
-    }
+        setCurrentWeather(responce);
+      } catch (Error) {
+        setError(Error);
+        console.log(Error.message);
+      } finally {
+      }
+    };
+    getWeather();
   }, [data.coordinates.lat, data.coordinates.lng, currentLanguage]);
+
   if (error) {
     return <p>{error.message}</p>;
   }
@@ -118,7 +115,7 @@ const Card = ({ data }) => {
                 {weather?.map((item, index) => (
                   <StyledCondition>
                     <StyledIcon
-                      key={index}
+                      key={item.id}
                       src={`http://openweathermap.org/img/w/${item.icon}.png`}
                       alt="wthr img"
                     />
@@ -128,7 +125,7 @@ const Card = ({ data }) => {
                 ))}
               </>
             </StyledNameWrapper>
-            <Forecast temp={Math.floor(main?.temp)} forecast={forecast} />
+            <Forecast temp={Math.floor(main?.temp)} data={data} />
             <StyledWeatherWrapper>
               <div>
                 <StyledTempWrapper>
@@ -137,14 +134,14 @@ const Card = ({ data }) => {
                     <StyledTempIcon
                       selectedTemp={selectedTemp}
                       onClick={handelTempChange}
-                      data-dataTemp="C"
+                      data-datatemp="C"
                     >
                       °C
                     </StyledTempIcon>
                     <StyledTempIcon
                       selectedTemp={selectedTemp}
                       onClick={handelTempChange}
-                      data-dataTemp="F"
+                      data-datatemp="F"
                     >
                       °F
                     </StyledTempIcon>
