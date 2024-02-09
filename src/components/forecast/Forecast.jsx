@@ -60,7 +60,6 @@ const Forecast = ({ temp, forecast, name }) => {
   const [daysForecast, setDaysForecast] = useState([]);
 
   const getColor = temp => {
-    console.log('temp : ', temp);
     if (temp < 0) {
       return '#5b8cff74 ';
     }

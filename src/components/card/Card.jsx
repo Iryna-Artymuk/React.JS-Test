@@ -24,6 +24,7 @@ import { formatDate } from '../../helpers/formatDate';
 import { getStoreLanguage } from '../../redux/selectors';
 import Forecast from '../forecast/Forecast';
 import { convertTemperature } from '../../helpers/convertTemperature';
+import { useTranslation } from 'react-i18next';
 
 const Card = ({ data }) => {
   const currentLanguage = useSelector(getStoreLanguage);
@@ -35,8 +36,10 @@ const Card = ({ data }) => {
   const [feelsTemp, setFeelsTemp] = useState();
 
   const { main, name, weather, sys, wind, dt } = currentWeather;
+
   const [forecast, setForecast] = useState(null);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const handelClick = id => {
     console.log('id : ', id);
     dispatch(deleteCity(id));
@@ -69,7 +72,7 @@ const Card = ({ data }) => {
     try {
       setloading(true);
       const currentWeatherFetch = fetch(
-        `${WEATHER_API_URL}/weather?lat=${data.coordinates.lat}&lon=${data.coordinates.lng}&appid=${WEATHER_API_KEY}&lang=${currentLanguage}&units=metric`
+        `${WEATHER_API_URL}/weather?lat=${data.coordinates.lat}&lon=${data.coordinates.lng}&appid=${WEATHER_API_KEY}&lang=${currentLanguage.value}&units=metric`
       );
       const forecastFetch = fetch(
         `${WEATHER_API_URL}/forecast?lat=${data.coordinates.lat}&lon=${data.coordinates.lng}&appid=${WEATHER_API_KEY}&units=metric`
@@ -100,7 +103,7 @@ const Card = ({ data }) => {
           <div></div>
           <div></div>
         </StyledCloseButton>
-        {!loading && !error ? (
+        {data && (
           <>
             <StyledNameWrapper>
               <StyledName>
@@ -108,19 +111,19 @@ const Card = ({ data }) => {
                   <span> {name},</span>
                   <span> {sys?.country}</span>
                 </div>
-
                 <StyledDate> {formatDate(dt, currentLanguage)}</StyledDate>
               </StyledName>
 
               <>
-                {weather?.map(item => (
+                {weather?.map((item, index) => (
                   <StyledCondition>
                     <StyledIcon
+                      key={index}
                       src={`http://openweathermap.org/img/w/${item.icon}.png`}
                       alt="wthr img"
                     />
 
-                    <StyledText>{item.main}</StyledText>
+                    <StyledText>{item.description}</StyledText>
                   </StyledCondition>
                 ))}
               </>
@@ -148,7 +151,7 @@ const Card = ({ data }) => {
                   </StyledIconWrapper>
                 </StyledTempWrapper>
                 <StyledFeelsTemp>
-                  Feels like:
+                  {t('weather.feelsLike')}:
                   <span>
                     {feelsTemp} °{selectedTemp}
                   </span>
@@ -157,22 +160,20 @@ const Card = ({ data }) => {
 
               <StyledAirMetrict temp={Math.floor(main?.temp)}>
                 <div>
-                  <span>Wind: </span>
+                  <span> {t('weather.wind')}: </span>
                   <span>{wind?.speed} m/s</span>
                 </div>
                 <div>
-                  <span>Humidity: </span>
+                  <span>{t('weather.humidity')}: </span>
                   <span>{main?.humidity}%</span>
                 </div>
                 <div>
-                  <span>Pressure: </span>
+                  <span>{t('weather.pressure')}: </span>
                   <span> {main?.pressure}Pa</span>
                 </div>
               </StyledAirMetrict>
             </StyledWeatherWrapper>
           </>
-        ) : (
-          <p>loading...</p>
         )}
       </StyledCardWrapper>
     </StyledCard>

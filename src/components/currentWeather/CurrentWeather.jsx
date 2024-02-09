@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { StyledWeatherList } from './StyledCurrentWeather';
 import Card from '../card/Card';
 import { useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ const CurrentWeather = () => {
     <>
       {cities?.length > 0 && (
         <StyledWeatherList>
-          {cities?.map(city => (
+          { cities?.map( city => (
             <Card
               key={city.id}
               data={city}

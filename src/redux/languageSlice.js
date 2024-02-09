@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { languagelState } from '../initialState';
-// console.log(' filterInitialState: ', filterInitialState);
 
-const languageSlice = createSlice({
+
+const languageSlice = createSlice( {
+
   // Ім'я слайсу
   name: 'language',
   // Початковий стан редюсера слайсу
@@ -13,8 +14,8 @@ const languageSlice = createSlice({
     // фільтру яке reducer запише в store
     setLanguage ( state, action )
     {
-    
-      state.language = action.payload.value;
+      state.language = action.payload;
+     
     },
   },
 });

@@ -6,22 +6,24 @@ import { setLanguage } from '../../redux/languageSlice';
 
 import LangIcon from '../icons/Lang';
 import { StyledLangWrapper } from './StyledChangeLang';
+import { useTranslation } from 'react-i18next';
 
 const ChangeLang = () => {
   const currentLanguage = useSelector(getStoreLanguage);
   const [selectedOption, setSelectedOption] = useState(currentLanguage);
   console.log('selectedOption: ', selectedOption);
+
   const options = [
     {
-      value: 'EN',
+      value: 'en',
       label: 'EN',
     },
     {
-      value: 'UK',
+      value: 'uk',
       label: 'UK',
     },
     {
-      value: 'HE',
+      value: 'he',
       label: 'HE',
     },
   ];
@@ -36,7 +38,7 @@ const ChangeLang = () => {
         color: 'pink',
       },
     }),
-    container: styles => ({ ...styles, color: 'red' }),
+    container: styles => ({ ...styles, color: '#AFAFAF' }),
     indicatorSeparator: styles => ({
       ...styles,
       display: 'none',
@@ -90,10 +92,11 @@ const ChangeLang = () => {
     },
   };
   const dispatch = useDispatch();
-
+  const { i18n } = useTranslation();
   useEffect(() => {
     dispatch(setLanguage(selectedOption));
-  }, [selectedOption, dispatch]);
+    i18n.changeLanguage(selectedOption.value);
+  }, [selectedOption, dispatch, i18n]);
   return (
     <StyledLangWrapper>
       <LangIcon />

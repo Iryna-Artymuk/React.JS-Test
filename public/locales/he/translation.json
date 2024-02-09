@@ -1,0 +1,13 @@
+{
+    "search":{
+      "addButton": "לְהוֹסִיף",
+      "inputPlaceholder":"הקלד שם עיר"
+    },
+    "weather":{
+      "feelsLike": "מרגיש כמו",
+      "wind": "רוּחַ",
+      "humidity": "לחות",
+      "pressure": "לַחַץ "
+    }
+
+}

@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { nanoid } from 'nanoid';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import { useTranslation } from 'react-i18next';
+
+
 import Button from '../button/Button';
 import { useDispatch } from 'react-redux';
 import { addCity } from '../../redux/citiesSlice';
@@ -19,6 +22,7 @@ const Search = ({ onSearchChange }) => {
     lat: null,
     lng: null,
   });
+  const { t, } = useTranslation();
   const dispatch = useDispatch();
   const handleSelect = async value => {
     const results = await geocodeByAddress(value);
@@ -32,49 +36,62 @@ const Search = ({ onSearchChange }) => {
       name: address,
       coordinates: coordinates,
     };
-    dispatch(addCity(selectedCityData));
+    dispatch( addCity( selectedCityData ) );
+   
+ 
     setAddress('');
   };
   return (
-    <StylesWrapper>
-      <PlacesAutocomplete
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <StylesContentWrapper>
-            <StylesSearchWrapper>
-              <input {...getInputProps({ placeholder: 'Type address' })} />
-            </StylesSearchWrapper>
+    <Suspense fallback="...loading">
+      <StylesWrapper>
+        <PlacesAutocomplete
+          value={address}
+          onChange={setAddress}
+          onSelect={handleSelect}
+        >
+          {({
+            getInputProps,
+            suggestions,
+            getSuggestionItemProps,
+            loading,
+          }) => (
+            <StylesContentWrapper>
+              <StylesSearchWrapper>
+                <input
+                  {...getInputProps({
+                    placeholder: t('search.inputPlaceholder'),
+                  })}
+                />
+              </StylesSearchWrapper>
 
-            {suggestions && (
-              <StyledSuggestionsList>
-                {loading ? <div>...loading</div> : null}
+              {suggestions && (
+                <StyledSuggestionsList>
+                  {loading ? <div>...loading</div> : null}
 
-                {suggestions.map(suggestion => {
-                  const style = {
-                    backgroundColor: suggestion.active ? '#F2F2F2' : '#fff',
-                  };
+                  {suggestions.map(suggestion => {
+                    const style = {
+                      backgroundColor: suggestion.active ? '#F2F2F2' : '#fff',
+                    };
 
-                  return (
-                    <li
-                      key={suggestion.index}
-                      {...getSuggestionItemProps(suggestion, { style })}
-                    >
-                      <p>{suggestion.description}</p>
-                    </li>
-                  );
-                })}
-              </StyledSuggestionsList>
-            )}
-          </StylesContentWrapper>
-        )}
-      </PlacesAutocomplete>
-      <Button type="button" onClick={handelClick}>
-        Add
-      </Button>
-    </StylesWrapper>
+                    return (
+                      <li
+                        key={suggestion.index}
+                        {...getSuggestionItemProps(suggestion, { style })}
+                      >
+                        <p>{suggestion.description}</p>
+                      </li>
+                    );
+                  })}
+                </StyledSuggestionsList>
+              )}
+            </StylesContentWrapper>
+          )}
+        </PlacesAutocomplete>
+        <Button type="button" onClick={handelClick}>
+          {t('search.addButton')}
+        </Button>
+      </StylesWrapper>
+    </Suspense>
   );
 };
 

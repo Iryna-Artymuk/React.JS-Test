@@ -1,0 +1,13 @@
+{
+  "search": {
+    "addButton": "Add",
+    "inputPlaceholder": "Type city name"
+  },
+
+  "weather": {
+    "feelsLike": "Feels like",
+    "wind": "Wind",
+    "humidity": "Humidity",
+    "pressure": "Pressure"
+  }
+}
