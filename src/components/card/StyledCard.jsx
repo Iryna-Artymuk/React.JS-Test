@@ -8,7 +8,9 @@ export const StyledCard = styled.li`
 `;
 export const StyledCardWrapper = styled.div`
   width: 100%;
+  max-width: 350px;
   min-height: 257px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -92,6 +94,7 @@ export const StyledIcon = styled.img`
   height: 50px;
 `;
 export const StyledText = styled.span`
+  width: 50px;
   font-size: 13px;
   color: ${({ theme }) => theme.colors.card_text_light};
 `;

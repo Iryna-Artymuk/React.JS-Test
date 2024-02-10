@@ -6,11 +6,11 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import { useTranslation } from 'react-i18next';
 
-
 import Button from '../button/Button';
 import { useDispatch } from 'react-redux';
 import { addCity } from '../../redux/citiesSlice';
 import {
+  StyledForm,
   StyledSuggestionsList,
   StylesContentWrapper,
   StylesSearchWrapper,
@@ -22,7 +22,7 @@ const Search = ({ onSearchChange }) => {
     lat: null,
     lng: null,
   });
-  const { t, } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const handleSelect = async value => {
     const results = await geocodeByAddress(value);
@@ -30,15 +30,14 @@ const Search = ({ onSearchChange }) => {
     setAddress(value);
     setCoordinates(latLng);
   };
-  const handelClick = () => {
+  const handelSubmit = () => {
     const selectedCityData = {
       id: nanoid(),
       name: address,
       coordinates: coordinates,
     };
-    dispatch( addCity( selectedCityData ) );
-   
- 
+    dispatch(addCity(selectedCityData));
+
     setAddress('');
   };
   return (
@@ -56,13 +55,15 @@ const Search = ({ onSearchChange }) => {
             loading,
           }) => (
             <StylesContentWrapper>
-              <StylesSearchWrapper>
+              <StyledForm onSubmit={handelSubmit}>
                 <input
+                  required
                   {...getInputProps({
                     placeholder: t('search.inputPlaceholder'),
                   })}
                 />
-              </StylesSearchWrapper>
+                <Button type="submit">{t('search.addButton')}</Button>
+              </StyledForm>
 
               {suggestions && (
                 <StyledSuggestionsList>
@@ -87,9 +88,6 @@ const Search = ({ onSearchChange }) => {
             </StylesContentWrapper>
           )}
         </PlacesAutocomplete>
-        <Button type="button" onClick={handelClick}>
-          {t('search.addButton')}
-        </Button>
       </StylesWrapper>
     </Suspense>
   );

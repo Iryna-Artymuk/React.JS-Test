@@ -12,17 +12,19 @@ import Search from './components/search/Search';
 import { StyledContentWrapper } from './components/Layout/StyledLayout';
 import { useEffect } from 'react';
 import { nanoid } from 'nanoid';
-import { addCity } from './redux/citiesSlice';
-import { useDispatch } from 'react-redux';
+import {  addCurrentCity } from './redux/citiesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCities } from './redux/selectors';
 
 function App() {
   const { coords } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: false,
     },
-    userDecisionTimeout: 5000,
+    // userDecisionTimeout: 5000,
   });
-
+  const cities = useSelector(getCities);
+  console.log('cities : ', cities);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,8 +33,9 @@ function App() {
       name: 'current city',
       coordinates: { lat: coords?.latitude, lng: coords?.longitude },
     };
+
     if (coords?.latitude && coords?.longitude) {
-      dispatch(addCity(currentCityData));
+      dispatch(addCurrentCity(currentCityData));
     }
   }, [coords?.latitude, coords?.longitude, dispatch]);
 

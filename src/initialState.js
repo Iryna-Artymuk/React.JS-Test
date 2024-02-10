@@ -8,4 +8,5 @@ export const cityState = {
   cities: [],
   isLoading: false,
   error: null,
+  currentCity: {},
 };

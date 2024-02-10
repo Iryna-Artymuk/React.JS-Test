@@ -2,20 +2,21 @@ import { styled } from 'styled-components';
 
 export const StylesWrapper = styled.div`
   width: 100%;
-  gap: 16px;
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
 `;
-export const StylesSearchWrapper = styled.div`
+export const StyledForm = styled.form`
   width: 100%;
   max-width: 569px;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 16px;
   margin-bottom: 10px;
   border-radius: 5px;
-  box-shadow: ${({ theme }) => theme.colors.input_shadow};
+
   input {
     width: 100%;
     height: 40px;
@@ -23,6 +24,7 @@ export const StylesSearchWrapper = styled.div`
     border: none;
     font-family: inherit;
     color: ${({ theme }) => theme.colors.card_text};
+    box-shadow: ${({ theme }) => theme.colors.input_shadow};
     &::placeholder {
       color: ${({ theme }) => theme.colors.card_text_light};
     }

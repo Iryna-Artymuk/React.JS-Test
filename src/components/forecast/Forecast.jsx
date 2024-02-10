@@ -68,8 +68,8 @@ const Forecast = ({ temp, data }) => {
     const getWeather = async () => {
       try {
         const responce = await getForecastWeather(
-          data.coordinates.lat,
-          data.coordinates.lng
+          data.coordinates?.lat,
+          data.coordinates?.lng
         );
 
         setForecast(responce);
@@ -80,7 +80,7 @@ const Forecast = ({ temp, data }) => {
       }
     };
     getWeather();
-  }, [data.coordinates.lat, data.coordinates.lng]);
+  }, [data?.lat, data?.lon]);
   useEffect(() => {
     const groupByDay = data => {
       const groupData = {};

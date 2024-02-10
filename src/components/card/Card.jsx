@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { deleteCity } from '../../redux/citiesSlice';
-import { getCurrentWeather } from '../../api';
+
 import { formatDate } from '../../helpers/formatDate';
 import { getStoreLanguage } from '../../redux/selectors';
 import { convertTemperature } from '../../helpers/convertTemperature';
@@ -27,11 +27,13 @@ import {
   StyledWeatherWrapper,
 } from './StyledCard';
 import Forecast from '../forecast/Forecast';
+import { getCurrentWeather } from '../../api';
 
-const Card = ({ data }) => {
+const Card = ({ data, currentCity }) => {
+  const [loading, setLoading] = useState(false);
   const currentLanguage = useSelector(getStoreLanguage);
   const [selectedTemp, setTelectedTemp] = useState('C');
-  const [loading, setLoading] = useState(false);
+
   const [temp, setTemp] = useState();
   const [feelsTemp, setFeelsTemp] = useState();
   const [currentWeather, setCurrentWeather] = useState([]);
@@ -52,28 +54,25 @@ const Card = ({ data }) => {
     setTelectedTemp(val);
   };
 
-  //getdata
   useEffect(() => {
     const getWeather = async () => {
       try {
-        setLoading(true);
         const responce = await getCurrentWeather(
-          data.coordinates.lat,
-          data.coordinates.lng,
-          currentLanguage?.value
+          data.coordinates?.lat,
+          data.coordinates?.lng,
+          currentLanguage.value
         );
 
-        if (responce.status === 200) {
-          setCurrentWeather(responce.data);
-          setLoading(false);
-        }
+        setCurrentWeather(responce.data);
       } catch (Error) {
+        // setError(Error);
         console.log(Error.message);
+      } finally {
         setLoading(false);
       }
     };
     getWeather();
-  }, [data.coordinates.lat, data.coordinates.lng, currentLanguage]);
+  }, [data.coordinates?.lat, data.coordinates?.lng, currentLanguage?.value]);
 
   useEffect(() => {
     if (selectedTemp === 'F') {
@@ -97,13 +96,13 @@ const Card = ({ data }) => {
 
   return (
     <StyledCard>
-      <StyledCardWrapper temp={Math.floor(main?.temp)}>
-        {!loading ? (
+      {!loading ? (
+        <StyledCardWrapper temp={Math.floor(main?.temp)}>
           <>
-            <StyledCloseButton onClick={() => handelClick(data.id)}>
+           {!currentCity&& <StyledCloseButton onClick={() => handelClick(data.id)}>
               <div></div>
               <div></div>
-            </StyledCloseButton>
+            </StyledCloseButton>}
 
             <StyledNameWrapper>
               <StyledName>
@@ -126,6 +125,7 @@ const Card = ({ data }) => {
                 </StyledCondition>
               ))}
             </StyledNameWrapper>
+
             <Forecast temp={Math.floor(main?.temp)} data={data} />
             <StyledWeatherWrapper>
               <div>
@@ -172,10 +172,10 @@ const Card = ({ data }) => {
               </StyledAirMetrict>
             </StyledWeatherWrapper>
           </>
-        ) : (
-          <p>...loading</p>
-        )}
-      </StyledCardWrapper>
+        </StyledCardWrapper>
+      ) : (
+        <p>loading...</p>
+      )}
     </StyledCard>
   );
 };

@@ -7,10 +7,9 @@ export const getStoreLanguage = state => {
 export const getCities = state => {
   return state.cities.cities;
 };
-// export const getIsLoading = state => {
-//   // console.log('state: ', state);
-
-//   return state.contacts.isLoading;
-// };
-
-// export const getError = state => state.contacts.error;
+export const getCurrentCity = state => {
+  return state.cities.currentCity;
+};
+export const getWeather = state => {
+  return state.cities.weather;
+};
