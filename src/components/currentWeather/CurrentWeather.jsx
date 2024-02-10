@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -9,28 +9,17 @@ import { StyledWeatherList } from './StyledCurrentWeather';
 
 const CurrentWeather = () => {
   const cities = useSelector(getCities);
-  console.log(' cities: ', cities);
-  const currentCity = useSelector(getCurrentCity);
-  const [loading, setLoading] = useState(false);
 
-  const getLoadingValue = value => {
-    setLoading(value);
-  };
-  useEffect(() => {
-    getLoadingValue();
-  }, [cities]);
+  const currentCity = useSelector(getCurrentCity);
+
   return (
     <>
-      {!loading ? (
-        <StyledWeatherList>
-          <Card key={'1'} data={currentCity} currentCity={true} />
-          {cities?.map(city => (
-            <Card key={city.id} data={city} />
-          ))}
-        </StyledWeatherList>
-      ) : (
-        <p>loading...</p>
-      )}
+      <StyledWeatherList>
+        <Card data={currentCity} currentCity={true} />
+        {cities?.map(city => (
+          <Card key={city.id} data={city} />
+        ))}
+      </StyledWeatherList>
     </>
   );
 };

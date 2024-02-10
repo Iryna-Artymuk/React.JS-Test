@@ -14,7 +14,7 @@ root.render(
     {/* <React.StrictMode> */}
     <PersistGate persistor={persistor}>
       <StyleSheetManager shouldForwardProp={isPropValid}>
-        <Suspense>
+        <Suspense fallback="loading app...">
           <App />
         </Suspense>
       </StyleSheetManager>

@@ -116,9 +116,8 @@ const Card = ({ data, currentCity }) => {
               </StyledName>
 
               {weather?.map((item, index) => (
-                <StyledCondition>
+                <StyledCondition key={item.id}>
                   <StyledIcon
-                    key={item.id}
                     src={`https://openweathermap.org/img/w/${item.icon}.png`}
                     alt="wthr img"
                   />
