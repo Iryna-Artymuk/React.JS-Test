@@ -6,13 +6,12 @@ const citySlice = createSlice({
   initialState: cityState,
   reducers: {
     addCurrentCity(state, action) {
-      console.log('add  current city');
       state.currentCity = action.payload;
     },
     addCity(state, action) {
       state.cities.unshift(action.payload);
     },
-   
+
     deleteCity(state, action) {
       const index = state.cities.findIndex(city => {
         return city.id === action.payload;

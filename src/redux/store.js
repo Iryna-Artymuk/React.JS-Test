@@ -24,7 +24,7 @@ const citiesPersistConfig = {
 
 export const store = configureStore({
   reducer: {
-    // contacts: contactsReducer,
+    
     language: persistReducer(languagePersistConfig, languageReducer),
     cities: persistReducer(citiesPersistConfig, citiesReducer),
   },

@@ -80,7 +80,7 @@ const Forecast = ({ temp, data }) => {
       }
     };
     getWeather();
-  }, [data?.lat, data?.lon]);
+  }, [data.coordinates?.lat, data.coordinates?.lng]);
   useEffect(() => {
     const groupByDay = data => {
       const groupData = {};

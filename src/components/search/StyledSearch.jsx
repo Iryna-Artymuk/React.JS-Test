@@ -25,6 +25,7 @@ export const StyledForm = styled.form`
     font-family: inherit;
     color: ${({ theme }) => theme.colors.card_text};
     box-shadow: ${({ theme }) => theme.colors.input_shadow};
+    -webkit-box-shadow: ${({ theme }) => theme.colors.input_shadow};
     &::placeholder {
       color: ${({ theme }) => theme.colors.card_text_light};
     }

@@ -99,10 +99,12 @@ const Card = ({ data, currentCity }) => {
       {!loading ? (
         <StyledCardWrapper temp={Math.floor(main?.temp)}>
           <>
-           {!currentCity&& <StyledCloseButton onClick={() => handelClick(data.id)}>
-              <div></div>
-              <div></div>
-            </StyledCloseButton>}
+            {!currentCity && (
+              <StyledCloseButton onClick={() => handelClick(data.id)}>
+                <div></div>
+                <div></div>
+              </StyledCloseButton>
+            )}
 
             <StyledNameWrapper>
               <StyledName>
@@ -117,7 +119,7 @@ const Card = ({ data, currentCity }) => {
                 <StyledCondition>
                   <StyledIcon
                     key={item.id}
-                    src={`http://openweathermap.org/img/w/${item.icon}.png`}
+                    src={`https://openweathermap.org/img/w/${item.icon}.png`}
                     alt="wthr img"
                   />
 

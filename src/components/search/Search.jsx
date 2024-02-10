@@ -13,7 +13,6 @@ import {
   StyledForm,
   StyledSuggestionsList,
   StylesContentWrapper,
-  StylesSearchWrapper,
   StylesWrapper,
 } from './StyledSearch';
 const Search = ({ onSearchChange }) => {
