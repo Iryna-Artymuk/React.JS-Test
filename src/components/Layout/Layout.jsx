@@ -6,7 +6,6 @@ function Layout({ children }) {
   return (
     <StyledContainer>
       {children}
-
     </StyledContainer>
   );
 }

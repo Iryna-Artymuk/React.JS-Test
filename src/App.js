@@ -10,11 +10,12 @@ import Layout from './components/Layout/Layout';
 import Search from './components/search/Search';
 
 import { StyledContentWrapper } from './components/Layout/StyledLayout';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { nanoid } from 'nanoid';
-import {  addCurrentCity } from './redux/citiesSlice';
+import { addCurrentCity } from './redux/citiesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCities } from './redux/selectors';
+import Spinner from './components/spinner/Spinner';
 
 function App() {
   const { coords } = useGeolocated({
@@ -41,18 +42,20 @@ function App() {
 
   return (
     <Layout>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <header>
-          <ChangeLang />
-        </header>
-        <main>
-          <StyledContentWrapper>
-            <Search />
-            <CurrentWeather />
-          </StyledContentWrapper>
-        </main>
-      </ThemeProvider>
+      <Suspense fallback={<Spinner />}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <header>
+            <ChangeLang />
+          </header>
+          <main>
+            <StyledContentWrapper>
+              <Search />
+              <CurrentWeather />
+            </StyledContentWrapper>
+          </main>
+        </ThemeProvider>
+      </Suspense>
     </Layout>
   );
 }

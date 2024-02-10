@@ -25,6 +25,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",
     "react-select-async-paginate": "^0.7.3",
+    "react-spinners": "^0.13.8",
     "redux-persist": "^6.0.0",
     "sass": "^1.70.0",
     "styled-components": "^6.1.8",

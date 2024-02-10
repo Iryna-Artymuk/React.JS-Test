@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
@@ -14,9 +14,9 @@ root.render(
     {/* <React.StrictMode> */}
     <PersistGate persistor={persistor}>
       <StyleSheetManager shouldForwardProp={isPropValid}>
-        <Suspense fallback="loading app...">
+      
           <App />
-        </Suspense>
+     
       </StyleSheetManager>
     </PersistGate>
     {/* </React.StrictMode> */}
