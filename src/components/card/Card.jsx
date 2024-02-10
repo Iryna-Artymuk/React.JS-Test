@@ -96,8 +96,8 @@ const Card = ({ data, currentCity }) => {
 
   return (
     <StyledCard>
-      {!loading ? (
-        <StyledCardWrapper temp={Math.floor(main?.temp)}>
+      <StyledCardWrapper temp={Math.floor(main?.temp)}>
+        {!loading && weather ? (
           <>
             {!currentCity && (
               <StyledCloseButton onClick={() => handelClick(data.id)}>
@@ -108,11 +108,13 @@ const Card = ({ data, currentCity }) => {
 
             <StyledNameWrapper>
               <StyledName>
-                <div>
-                  <span> {name},</span>
-                  <span> {sys?.country}</span>
-                </div>
-                <StyledDate> {formatDate(dt, currentLanguage)}</StyledDate>
+                {name && (
+                  <div>
+                    <span> {name},</span>
+                    <span> {sys?.country}</span>
+                  </div>
+                )}
+                <StyledDate>{dt && formatDate(dt, currentLanguage)}</StyledDate>
               </StyledName>
 
               {weather?.map((item, index) => (
@@ -173,10 +175,10 @@ const Card = ({ data, currentCity }) => {
               </StyledAirMetrict>
             </StyledWeatherWrapper>
           </>
-        </StyledCardWrapper>
-      ) : (
-        <p>loading...</p>
-      )}
+        ) : (
+          <p>loading...</p>
+        )}
+      </StyledCardWrapper>
     </StyledCard>
   );
 };
