@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     {/* <React.StrictMode> */}
-    <PersistGate loading="...loading" persistor={persistor}>
+    <PersistGate persistor={persistor}>
       <StyleSheetManager shouldForwardProp={isPropValid}>
-        <Suspense fallback="...loading">
+        <Suspense>
           <App />
         </Suspense>
       </StyleSheetManager>

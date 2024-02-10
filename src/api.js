@@ -10,10 +10,9 @@ export const getCurrentWeather = async (lat, lng, lang) => {
       `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}&lang=${lang}&units=metric`
     );
 
-    return response.data;
-  } catch (error) {
-    //  setError(error);
-  }
+    
+    return response;
+  } catch (error) {}
 };
 
 export const getForecastWeather = async (lat, lng) => {

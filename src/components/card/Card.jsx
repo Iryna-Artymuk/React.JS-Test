@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -27,13 +27,15 @@ import {
   StyledWeatherWrapper,
 } from './StyledCard';
 import Forecast from '../forecast/Forecast';
+
 const Card = ({ data }) => {
   const currentLanguage = useSelector(getStoreLanguage);
-  const [error, setError] = useState(null);
   const [selectedTemp, setTelectedTemp] = useState('C');
+  const [loading, setLoading] = useState(false);
   const [temp, setTemp] = useState();
   const [feelsTemp, setFeelsTemp] = useState();
   const [currentWeather, setCurrentWeather] = useState([]);
+
   const { main, name, weather, sys, wind, dt } = currentWeather;
 
   const dispatch = useDispatch();
@@ -49,6 +51,29 @@ const Card = ({ data }) => {
     let val = e.target.getAttribute('data-datatemp');
     setTelectedTemp(val);
   };
+
+  //getdata
+  useEffect(() => {
+    const getWeather = async () => {
+      try {
+        setLoading(true);
+        const responce = await getCurrentWeather(
+          data.coordinates.lat,
+          data.coordinates.lng,
+          currentLanguage?.value
+        );
+
+        if (responce.status === 200) {
+          setCurrentWeather(responce.data);
+          setLoading(false);
+        }
+      } catch (Error) {
+        console.log(Error.message);
+        setLoading(false);
+      }
+    };
+    getWeather();
+  }, [data.coordinates.lat, data.coordinates.lng, currentLanguage]);
 
   useEffect(() => {
     if (selectedTemp === 'F') {
@@ -70,37 +95,16 @@ const Card = ({ data }) => {
     }
   }, [selectedTemp, main?.temp, main?.feels_like]);
 
-  useEffect(() => {
-    const getWeather = async () => {
-      try {
-        const responce = await getCurrentWeather(
-          data.coordinates.lat,
-          data.coordinates.lng,
-          currentLanguage?.value
-        );
-
-        setCurrentWeather(responce);
-      } catch (Error) {
-        setError(Error);
-        console.log(Error.message);
-      } finally {
-      }
-    };
-    getWeather();
-  }, [data.coordinates.lat, data.coordinates.lng, currentLanguage]);
-
-  if (error) {
-    return <p>{error.message}</p>;
-  }
   return (
     <StyledCard>
       <StyledCardWrapper temp={Math.floor(main?.temp)}>
-        <StyledCloseButton onClick={() => handelClick(data.id)}>
-          <div></div>
-          <div></div>
-        </StyledCloseButton>
-        {data && (
+        {!loading ? (
           <>
+            <StyledCloseButton onClick={() => handelClick(data.id)}>
+              <div></div>
+              <div></div>
+            </StyledCloseButton>
+
             <StyledNameWrapper>
               <StyledName>
                 <div>
@@ -110,19 +114,17 @@ const Card = ({ data }) => {
                 <StyledDate> {formatDate(dt, currentLanguage)}</StyledDate>
               </StyledName>
 
-              <>
-                {weather?.map((item, index) => (
-                  <StyledCondition>
-                    <StyledIcon
-                      key={item.id}
-                      src={`http://openweathermap.org/img/w/${item.icon}.png`}
-                      alt="wthr img"
-                    />
+              {weather?.map((item, index) => (
+                <StyledCondition>
+                  <StyledIcon
+                    key={item.id}
+                    src={`http://openweathermap.org/img/w/${item.icon}.png`}
+                    alt="wthr img"
+                  />
 
-                    <StyledText>{item.description}</StyledText>
-                  </StyledCondition>
-                ))}
-              </>
+                  <StyledText>{item.description}</StyledText>
+                </StyledCondition>
+              ))}
             </StyledNameWrapper>
             <Forecast temp={Math.floor(main?.temp)} data={data} />
             <StyledWeatherWrapper>
@@ -170,6 +172,8 @@ const Card = ({ data }) => {
               </StyledAirMetrict>
             </StyledWeatherWrapper>
           </>
+        ) : (
+          <p>...loading</p>
         )}
       </StyledCardWrapper>
     </StyledCard>

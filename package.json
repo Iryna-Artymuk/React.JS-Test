@@ -18,6 +18,7 @@
     "react-accessible-accordion": "^5.0.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
+    "react-geolocated": "^4.1.2",
     "react-i18next": "^14.0.5",
     "react-places-autocomplete": "^7.3.0",
     "react-redux": "^9.1.0",
