@@ -23,13 +23,17 @@ const Search = ({ onSearchChange }) => {
   });
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   const handleSelect = async value => {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
     setAddress(value);
     setCoordinates(latLng);
   };
-  const handelSubmit = () => {
+  
+  const handelSubmit = (e) =>
+  {
+     e.preventDefault();
     const selectedCityData = {
       id: nanoid(),
       name: address,
