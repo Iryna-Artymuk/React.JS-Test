@@ -30,7 +30,7 @@ const Search = ({ onSearchChange }) => {
     setAddress(value);
     setCoordinates(latLng);
   };
-  
+
   const handelSubmit = (e) =>
   {
      e.preventDefault();
@@ -70,7 +70,7 @@ const Search = ({ onSearchChange }) => {
 
               {suggestions && (
                 <StyledSuggestionsList>
-                  {loading ? <div>...loading</div> : null}
+                  {loading ? <div>{t('loading')}...</div> : null}
 
                   {suggestions.map(suggestion => {
                     const style = {

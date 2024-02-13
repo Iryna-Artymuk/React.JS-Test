@@ -9,6 +9,6 @@
     "wind": "Wind",
     "humidity": "Humidity",
     "pressure": "Pressure"
-  }
+  },
+  "loading": "loading"
 }
-

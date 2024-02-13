@@ -176,7 +176,7 @@ const Card = ({ data, currentCity }) => {
             </StyledWeatherWrapper>
           </>
         ) : (
-          <p>loading...</p>
+          <div>{t('loading')}</div>
         )}
       </StyledCardWrapper>
     </StyledCard>
