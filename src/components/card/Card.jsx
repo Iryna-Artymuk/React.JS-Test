@@ -37,7 +37,6 @@ const Card = ({ data, currentCity }) => {
   const [temp, setTemp] = useState();
   const [feelsTemp, setFeelsTemp] = useState();
   const [currentWeather, setCurrentWeather] = useState([]);
-
   const { main, name, weather, sys, wind, dt } = currentWeather;
 
   const dispatch = useDispatch();

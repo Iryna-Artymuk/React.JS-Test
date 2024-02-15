@@ -9,18 +9,15 @@ import { StyledWeatherList } from './StyledCurrentWeather';
 
 const CurrentWeather = () => {
   const cities = useSelector(getCities);
-
   const currentCity = useSelector(getCurrentCity);
 
   return (
-    <>
-      <StyledWeatherList>
-        <Card data={currentCity} currentCity={true} />
-        {cities?.map(city => (
-          <Card key={city.id} data={city} />
-        ))}
-      </StyledWeatherList>
-    </>
+    <StyledWeatherList>
+      <Card data={currentCity} currentCity={true} />
+      {cities?.map(city => (
+        <Card key={city.id} data={city} />
+      ))}
+    </StyledWeatherList>
   );
 };
 
