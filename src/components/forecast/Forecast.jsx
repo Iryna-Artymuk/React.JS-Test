@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 import 'chart.js/auto';
 import { Chart as ChartJS, Filler } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -63,6 +65,7 @@ const Forecast = ({ temp, data }) => {
   const [forecast, setForecast] = useState([]);
   const [forecastTemp, setForecastTemp] = useState([]);
   const [daysForecast, setDaysForecast] = useState([]);
+ const theme = useContext(ThemeContext);
 
   useEffect(() => {
     const getWeather = async () => {
@@ -99,7 +102,6 @@ const Forecast = ({ temp, data }) => {
 
   //get chart date
   useEffect(() => {
-    'hello';
     daysForecast.forEach(day => {
       setDate(prev => [...prev, convertUnixToDate(day.dt)]);
       setForecastTemp(prev => [...prev, Math.floor(day.main.temp)]);
@@ -115,8 +117,8 @@ const Forecast = ({ temp, data }) => {
             //fill: true,
             borderWidth: 1,
             pointRadius: 1,
-            borderColor: getGraphColor(temp),
-            backgroundColor: getGraphColor(temp),
+            borderColor: getGraphColor(temp, theme),
+            backgroundColor: getGraphColor(temp, theme),
           },
         ],
       });

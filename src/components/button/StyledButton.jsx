@@ -7,4 +7,8 @@ export const StyledButton = styled.button`
   color: ${({ theme }) => theme.colors.button_text};
   box-shadow: ${({ theme }) => theme.colors.button_shadow};
   border-radius: 5px;
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.button_disabledBG};
+  }
 `;

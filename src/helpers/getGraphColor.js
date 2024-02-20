@@ -1,8 +1,9 @@
-export const getGraphColor = temp => {
+export const getGraphColor = (temp, theme) => {
+  console.log('theme: ', theme);
   if (temp < 0) {
-    return '#5b8cff74 ';
+    return theme.colors.forecast_cold;
   }
   if (temp >= 0) {
-    return '#ffa25ba6';
+    return theme.colors.forecast_hot;
   }
 };

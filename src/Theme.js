@@ -7,6 +7,7 @@ export const theme = {
     input_textColor: '#000000',
 
     button_BG: '#459DE9',
+    button_disabledBG: '#C5C5C5',
     button_text: '#FFFFFF',
     button_shadow: '0px 3px 6px #00000029',
     closeButton_BG: 'black',
@@ -15,6 +16,7 @@ export const theme = {
     card_BG_hot: '#FFFAF1',
     card_shadow: '3px 6px #00000029',
     card_text: '#000000',
+    error_text: 'tomato',
     card_text_light: '#C5C5C5',
     card_temp_icon_light: '#8D8D8D',
     card_temp_icon_dark: '#000000',
@@ -27,5 +29,8 @@ export const theme = {
 
     forecast_BG_hot:
       'transparent linear-gradient(180deg, #FFA25B 0%, #FFF4F4 100%) 0% 0% no-repeat padding-box',
+    forecast_cold: '#5b8cff74',
+
+    forecast_hot: '#ffa25ba6',
   },
 };

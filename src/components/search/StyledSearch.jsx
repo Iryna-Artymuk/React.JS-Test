@@ -34,6 +34,10 @@ export const StyledForm = styled.form`
     padding: 5px;
   }
 `;
+export const StyledError = styled.p`
+  color: ${({ theme }) => theme.colors.error_text};
+  align-self: flex-start;
+`;
 export const StylesContentWrapper = styled.div`
   width: 100%;
   max-width: 569px;
@@ -52,9 +56,11 @@ export const StyledSuggestionsList = styled.ul`
   justify-content: center;
   align-items: flex-start;
   gap: 3px;
+  margin-bottom: 10px;
   box-shadow: ${({ theme }) => theme.colors.input_shadow};
-
+  cursor: pointer;
   li {
+    width: 100%;
     height: 23px;
     padding: 3px;
     font-size: 14px;

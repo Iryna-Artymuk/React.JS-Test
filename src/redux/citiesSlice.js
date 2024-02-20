@@ -9,7 +9,18 @@ const citySlice = createSlice({
       state.currentCity = action.payload;
     },
     addCity(state, action) {
-      state.cities.unshift(action.payload);
+      const dublicate = state.cities.find(
+        city => city.name === action.payload.name
+      );
+
+      if (!dublicate) {
+        state.cities.unshift(action.payload);
+      } else {
+        state.error = 'city alleady in your  list ';
+      }
+    },
+    setError(state, action) {
+      state.error = action.payload;
     },
 
     deleteCity(state, action) {
@@ -24,6 +35,7 @@ const citySlice = createSlice({
 // Генератори екшенів
 export const { addCity } = citySlice.actions;
 export const { deleteCity } = citySlice.actions;
+export const { setError } = citySlice.actions;
 export const { addCurrentCity } = citySlice.actions;
 export const { addtWeather } = citySlice.actions;
 // Редюсер слайсу

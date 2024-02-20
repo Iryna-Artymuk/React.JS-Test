@@ -7,48 +7,76 @@ import PlacesAutocomplete, {
 import { useTranslation } from 'react-i18next';
 
 import Button from '../button/Button';
-import { useDispatch } from 'react-redux';
-import { addCity } from '../../redux/citiesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCity, setError } from '../../redux/citiesSlice';
 import {
+  StyledError,
   StyledForm,
   StyledSuggestionsList,
   StylesContentWrapper,
   StylesWrapper,
 } from './StyledSearch';
-const Search = ({ onSearchChange }) => {
+import { getCitiesError } from '../../redux/selectors';
+const Search = () => {
   const [address, setAddress] = useState('');
+
   const [coordinates, setCoordinates] = useState({
     lat: null,
     lng: null,
   });
+  const [isValid, setValid] = useState(true);
+
+  const [validationErrors, setValidationErrors] = useState({});
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
+  const error = useSelector(getCitiesError);
   const handleSelect = async value => {
-    const results = await geocodeByAddress(value);
-    const latLng = await getLatLng(results[0]);
-    setAddress(value);
-    setCoordinates(latLng);
+    try {
+      if (value?.length > 0) {
+        const results = await geocodeByAddress(value);
+        const latLng = await getLatLng(results[0]);
+        setAddress(value);
+        setCoordinates(latLng);
+      } else {
+        setValidationErrors(prev => ({ ...prev, search: 'fild is reqqired' }));
+
+        setValid(false);
+
+        return;
+      }
+    } catch (error) {}
   };
 
-  const handelSubmit = (e) =>
+  const handelChange = value =>
   {
-     e.preventDefault();
-    const selectedCityData = {
-      id: nanoid(),
-      name: address,
-      coordinates: coordinates,
-    };
-    dispatch(addCity(selectedCityData));
-
-    setAddress('');
+    dispatch(setError(''));
+    setValidationErrors({});
+    setValid(true);
+    setAddress(value);
+  };
+  const handelSubmit = e => {
+    e.preventDefault();
+    try {
+      const selectedCityData = {
+        id: nanoid(),
+        name: address,
+        coordinates: coordinates,
+      };
+      if (address?.length > 0) {
+        dispatch(addCity(selectedCityData));
+        setAddress('');
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
   return (
     <Suspense fallback="...loading">
       <StylesWrapper>
         <PlacesAutocomplete
           value={address}
-          onChange={setAddress}
+          onChange={handelChange}
           onSelect={handleSelect}
         >
           {({
@@ -65,9 +93,15 @@ const Search = ({ onSearchChange }) => {
                     placeholder: t('search.inputPlaceholder'),
                   })}
                 />
-                <Button type="submit">{t('search.addButton')}</Button>
-              </StyledForm>
 
+                <Button type="submit" disabled={!isValid}>
+                  {t('search.addButton')}
+                </Button>
+              </StyledForm>
+              <StyledError>
+                {validationErrors.search && validationErrors.search}
+                {error && !validationErrors.search && error}
+              </StyledError>
               {suggestions && (
                 <StyledSuggestionsList>
                   {loading ? <div>{t('loading')}...</div> : null}
