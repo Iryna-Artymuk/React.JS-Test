@@ -39,7 +39,10 @@ const Search = () => {
         setAddress(value);
         setCoordinates(latLng);
       } else {
-        setValidationErrors(prev => ({ ...prev, search: 'fild is reqqired' }));
+        setValidationErrors(prev => ({
+          ...prev,
+          search: 'field is required',
+        }));
 
         setValid(false);
 

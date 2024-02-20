@@ -16,7 +16,7 @@ const citySlice = createSlice({
       if (!dublicate) {
         state.cities.unshift(action.payload);
       } else {
-        state.error = 'city alleady in your  list ';
+        state.error = 'city already in your  list ';
       }
     },
     setError(state, action) {
